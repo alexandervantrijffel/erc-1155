@@ -20,12 +20,17 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface ERC1155MetadataInterface extends ethers.utils.Interface {
   functions: {
+    "_uint2str(uint256)": FunctionFragment;
     "baseURI()": FunctionFragment;
     "name()": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "uri(uint256)": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "_uint2str",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "baseURI", values?: undefined): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
@@ -34,6 +39,7 @@ interface ERC1155MetadataInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
 
+  decodeFunctionResult(functionFragment: "_uint2str", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "baseURI", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(
@@ -93,6 +99,13 @@ export class ERC1155Metadata extends Contract {
   interface: ERC1155MetadataInterface;
 
   functions: {
+    _uint2str(v: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+
+    "_uint2str(uint256)"(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     baseURI(overrides?: CallOverrides): Promise<[string]>;
 
     "baseURI()"(overrides?: CallOverrides): Promise<[string]>;
@@ -119,6 +132,13 @@ export class ERC1155Metadata extends Contract {
     ): Promise<[string]>;
   };
 
+  _uint2str(v: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+  "_uint2str(uint256)"(
+    v: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   baseURI(overrides?: CallOverrides): Promise<string>;
 
   "baseURI()"(overrides?: CallOverrides): Promise<string>;
@@ -142,6 +162,13 @@ export class ERC1155Metadata extends Contract {
   "uri(uint256)"(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
+    _uint2str(v: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    "_uint2str(uint256)"(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     baseURI(overrides?: CallOverrides): Promise<string>;
 
     "baseURI()"(overrides?: CallOverrides): Promise<string>;
@@ -176,6 +203,13 @@ export class ERC1155Metadata extends Contract {
   };
 
   estimateGas: {
+    _uint2str(v: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    "_uint2str(uint256)"(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     baseURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     "baseURI()"(overrides?: CallOverrides): Promise<BigNumber>;
@@ -203,6 +237,16 @@ export class ERC1155Metadata extends Contract {
   };
 
   populateTransaction: {
+    _uint2str(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "_uint2str(uint256)"(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     baseURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "baseURI()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;

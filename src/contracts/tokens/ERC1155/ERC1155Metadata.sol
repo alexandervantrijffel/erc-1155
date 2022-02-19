@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-pragma solidity 0.7.4;
+pragma solidity 0.8.9;
 import "../../interfaces/IERC1155Metadata.sol";
 import "../../utils/ERC165.sol";
 
@@ -88,33 +88,21 @@ contract ERC1155Metadata is IERC1155Metadata, ERC165 {
 
   /**
    * @notice Convert uint256 to string
-   * @param _i Unsigned integer to convert to string
    */
-  function _uint2str(uint256 _i) internal pure returns (string memory _uintAsString) {
-    if (_i == 0) {
-      return "0";
-    }
-
-    uint256 j = _i;
-    uint256 ii = _i;
-    uint256 len;
-
-    // Get number of bytes
-    while (j != 0) {
-      len++;
-      j /= 10;
-    }
-
-    bytes memory bstr = new bytes(len);
-    uint256 k = len - 1;
-
-    // Get each individual ASCII
-    while (ii != 0) {
-      bstr[k--] = byte(uint8(48 + ii % 10));
-      ii /= 10;
-    }
-
-    // Convert to string
-    return string(bstr);
+  function _uint2str(uint256 v) public pure returns (string memory) {
+      uint maxlength = 100;
+      bytes memory reversed = new bytes(maxlength);
+      uint i = 0;
+      while (v != 0) {
+          uint remainder = v % 10;
+          v = v / 10;
+          reversed[i++] = bytes1(uint8(48 + remainder));
+      }
+      bytes memory s = new bytes(i); // i + 1 is inefficient
+      for (uint j = 0; j < i; j++) {
+          s[j] = reversed[i - j - 1]; // to avoid the off-by-one error
+      }
+      string memory str = string(s);  // memory isn't implicitly convertible to storage
+      return str;
   }
 }

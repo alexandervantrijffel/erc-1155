@@ -21,6 +21,7 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface ERC2981GlobalMockInterface extends ethers.utils.Interface {
   functions: {
+    "_uint2str(uint256)": FunctionFragment;
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
     "baseURI()": FunctionFragment;
@@ -40,6 +41,10 @@ interface ERC2981GlobalMockInterface extends ethers.utils.Interface {
     "uri(uint256)": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "_uint2str",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "balanceOf",
     values: [string, BigNumberish]
@@ -100,6 +105,7 @@ interface ERC2981GlobalMockInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
 
+  decodeFunctionResult(functionFragment: "_uint2str", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "balanceOfBatch",
@@ -208,6 +214,13 @@ export class ERC2981GlobalMock extends Contract {
   interface: ERC2981GlobalMockInterface;
 
   functions: {
+    _uint2str(v: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+
+    "_uint2str(uint256)"(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     balanceOf(
       _owner: string,
       _id: BigNumberish,
@@ -418,6 +431,13 @@ export class ERC2981GlobalMock extends Contract {
     ): Promise<[string]>;
   };
 
+  _uint2str(v: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+  "_uint2str(uint256)"(
+    v: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   balanceOf(
     _owner: string,
     _id: BigNumberish,
@@ -625,6 +645,13 @@ export class ERC2981GlobalMock extends Contract {
   "uri(uint256)"(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
+    _uint2str(v: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    "_uint2str(uint256)"(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     balanceOf(
       _owner: string,
       _id: BigNumberish,
@@ -886,6 +913,13 @@ export class ERC2981GlobalMock extends Contract {
   };
 
   estimateGas: {
+    _uint2str(v: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    "_uint2str(uint256)"(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     balanceOf(
       _owner: string,
       _id: BigNumberish,
@@ -1085,6 +1119,16 @@ export class ERC2981GlobalMock extends Contract {
   };
 
   populateTransaction: {
+    _uint2str(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "_uint2str(uint256)"(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     balanceOf(
       _owner: string,
       _id: BigNumberish,

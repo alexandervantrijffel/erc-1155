@@ -21,6 +21,7 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface ERC1155MetaMintBurnMockInterface extends ethers.utils.Interface {
   functions: {
+    "_uint2str(uint256)": FunctionFragment;
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
     "baseURI()": FunctionFragment;
@@ -42,6 +43,10 @@ interface ERC1155MetaMintBurnMockInterface extends ethers.utils.Interface {
     "uri(uint256)": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "_uint2str",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "balanceOf",
     values: [string, BigNumberish]
@@ -107,6 +112,7 @@ interface ERC1155MetaMintBurnMockInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
 
+  decodeFunctionResult(functionFragment: "_uint2str", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "balanceOfBatch",
@@ -222,6 +228,13 @@ export class ERC1155MetaMintBurnMock extends Contract {
   interface: ERC1155MetaMintBurnMockInterface;
 
   functions: {
+    _uint2str(v: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+
+    "_uint2str(uint256)"(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     balanceOf(
       _owner: string,
       _id: BigNumberish,
@@ -476,6 +489,13 @@ export class ERC1155MetaMintBurnMock extends Contract {
     ): Promise<[string]>;
   };
 
+  _uint2str(v: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+  "_uint2str(uint256)"(
+    v: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   balanceOf(
     _owner: string,
     _id: BigNumberish,
@@ -724,6 +744,13 @@ export class ERC1155MetaMintBurnMock extends Contract {
   "uri(uint256)"(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
+    _uint2str(v: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    "_uint2str(uint256)"(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     balanceOf(
       _owner: string,
       _id: BigNumberish,
@@ -1034,6 +1061,13 @@ export class ERC1155MetaMintBurnMock extends Contract {
   };
 
   estimateGas: {
+    _uint2str(v: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    "_uint2str(uint256)"(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     balanceOf(
       _owner: string,
       _id: BigNumberish,
@@ -1286,6 +1320,16 @@ export class ERC1155MetaMintBurnMock extends Contract {
   };
 
   populateTransaction: {
+    _uint2str(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "_uint2str(uint256)"(
+      v: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     balanceOf(
       _owner: string,
       _id: BigNumberish,
