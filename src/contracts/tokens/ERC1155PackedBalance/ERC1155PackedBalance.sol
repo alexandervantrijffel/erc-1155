@@ -31,7 +31,7 @@ contract ERC1155PackedBalance is IERC1155, ERC165 {
 
   // Constants regarding bin sizes for balance packing
   // IDS_BITS_SIZE **MUST** be a power of 2 (e.g. 2, 4, 8, 16, 32, 64, 128)
-  uint256 internal constant IDS_BITS_SIZE   = 16;                  // Max balance amount in bits per token ID
+  uint256 internal constant IDS_BITS_SIZE   = 2;                  // Max balance amount in bits per token ID
   uint256 internal constant IDS_PER_UINT256 = 256 / IDS_BITS_SIZE; // Number of ids per uint256
 
   // Operations for _updateIDBalance
