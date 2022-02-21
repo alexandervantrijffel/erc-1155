@@ -4,7 +4,8 @@ pragma solidity 0.8.9;
 import "../../utils/SafeMath.sol";
 import "../../interfaces/IERC1155TokenReceiver.sol";
 import "../../interfaces/IERC1155.sol";
-import "../../utils/Address.sol";
+//import "../../utils/Address.sol";
+import "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol";
 import "../../utils/ERC165.sol";
 
 
@@ -18,7 +19,7 @@ import "../../utils/ERC165.sol";
  */
 contract ERC1155PackedBalance is IERC1155, ERC165 {
   using SafeMath for uint256;
-  using Address for address;
+  using AddressUpgradeable for address;
 
   /***********************************|
   |        Variables and Events       |
@@ -30,7 +31,7 @@ contract ERC1155PackedBalance is IERC1155, ERC165 {
 
   // Constants regarding bin sizes for balance packing
   // IDS_BITS_SIZE **MUST** be a power of 2 (e.g. 2, 4, 8, 16, 32, 64, 128)
-  uint256 internal constant IDS_BITS_SIZE   = 32;                  // Max balance amount in bits per token ID
+  uint256 internal constant IDS_BITS_SIZE   = 16;                  // Max balance amount in bits per token ID
   uint256 internal constant IDS_PER_UINT256 = 256 / IDS_BITS_SIZE; // Number of ids per uint256
 
   // Operations for _updateIDBalance

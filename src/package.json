@@ -22,5 +22,7 @@
     "ethers": "^5.0.32"
   },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "@openzeppelin/contracts-upgradeable": "4.5.1"
+  }
 }
